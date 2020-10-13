@@ -1,0 +1,63 @@
+{
+    "intent":[
+        {
+            "id":1055333,
+            "tag":"question",
+            "questions":["show me my recent order","what is my recent order"],
+            "answer":["RecentOrder"],
+            "mimeType":"text/html"
+        },
+        {
+            "id":1033333,
+            "tag":"question",
+            "questions":["What my balance","how much do i have in my account"],
+            "answer":["showAccountBalance"],
+            "mimeType":"text/html"
+        },
+        {
+            "id":1000,
+            "tag":"question",
+            "questions":["about fcmb","what is fcmb"],
+            "answer":["fcmb is a bank"],
+            "mimeType":"text/plain"
+        },
+        {
+            "id":1002,
+            "tag":"question",
+            "questions":["what seamfix","about seamfix.com","tell me about seamfix"],
+            "answer":["Seamfix is an online platform that allow organizations to seamlessly capture, on-board and verify identities of customers in real time."],
+            "mimeType":"text/plain"
+        },
+        {
+            "id":10012,
+            "tag":"question",
+            "questions":["seamfix solution","what solution does seamfix offer","what can seamfix do","what can i do with seamfix"],
+            "answer":["Seamfix offers the following solution:\n1) BioRegistra.\n Do more on our biometric data capture platform for census and enumeration, with a geolocation feature that lets you know the source of your data on the go. \n2)BioSmart. \n Meet regulatory KYC requirements and business on-boarding objectives with our robust SIM Registration System for mobile operators \n3)Verified.ng \nConfirm ‘real’ identities of individuals, match them against multiple databases of certified government organizations."],
+            "mimeType":"text/plain"
+
+        },
+        {
+            "id":100378,
+            "tag":"question",
+            "questions":["about fcmb","what is fcmb"],
+            "answer":["fcmb is a bank"],
+            "mimeType":"text/plain"
+        },
+        {
+            "id":100097,
+            "tag":"command",
+            "questions":["i want to make a transfer","want transfer money to friend"],
+            "answer":["makeBankTransfer"],
+            "mimeType":"text/html"
+        },
+        {
+            "id":100624,
+            "tag":"question",
+            "questions":["last credited amount","last transfer made"],
+            "answer":["showLastBankTransfer"],
+            "mimeType":"text/html"
+        }
+
+
+    ]
+}
