@@ -3,7 +3,8 @@ import chatReducer from "./ChatReducer"
 import QAReducer from "./QAReducer"
 import suggestionReducer from "./SuggestionReducer"
 import userReducer from "./UserReducer"
-import {combineReducers,createStore} from 'redux'
+import {applyMiddleware, combineReducers,createStore} from 'redux'
+import { composeWithDevTools   } from 'redux-devtools-extension';
 
 
 
@@ -22,7 +23,7 @@ import {combineReducers,createStore} from 'redux'
 
 
 
-  const store = createStore(rootReducer)
+  const store = createStore(rootReducer,composeWithDevTools(applyMiddleware()))
 
   export default store
 

@@ -30,8 +30,9 @@ function sentenceMatch(probability=0.5,text='',preSentence='',withProbability=fa
 // return a list of id and their probability
 function getIntentProbabiliesFromText(intent=[],text=''){
     if(text){
-       return intent.map(({id,questions})=>{
-       var qestionProbabilities =   questions.map(value=>sentenceMatch(0.5,text,value,true))
+
+       return intent.map(({id,questions,leastPercentage})=>{
+       var qestionProbabilities =   questions.map(value=>sentenceMatch(0.5,text,value,true)>=leastPercentage?sentenceMatch(0.5,text,value,true):0)
        return {id,probability:Math.max(...qestionProbabilities)}
                           })
     }else{

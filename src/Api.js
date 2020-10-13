@@ -46,6 +46,14 @@ class Client {
 
 
 
+    render(text){
+        const {username,profilePic,balance} = store.getState().user
+        return text.replace("<% username %>",username)
+        .replace("<% balance %>",balance)
+        .replace("<% profilePic %>",profilePic)
+
+    }
+
 
     UpdateChatContent(){
 
@@ -76,10 +84,11 @@ class Client {
 
     getQuestionListSuggestion(){
 
-        if(store.getState().chatQuery){
+        if(store.getState().chatQuery.query){
+
             let htmlTemplate = ''
 
-            const result = store.getState().QA.filter((e)=> _.some(e.questions.map(value=>sentenceMatch(0.2,store.getState().chatQuery,value)))).slice(0,6)
+            const result = store.getState().QA.filter((e)=> _.some(e.questions.map(value=>sentenceMatch(0.2,store.getState().chatQuery.query,value)))).slice(0,6)
 
             result.forEach(ele=>{
                 ele.questions.forEach(elem=>{
@@ -90,6 +99,8 @@ class Client {
 
             this.suggestionListBlock.innerHTML = htmlTemplate
 
+        }else{
+            this.suggestionListBlock.innerHTML = ''
         }
 
 
@@ -100,26 +111,57 @@ class Client {
 
         try {
 
-            if(message||store.getState().chatQuery){
+            if(message||store.getState().chatQuery.query){
+                if(store.getState().chatQuery.propsName){
+                    const chatQuery = store.getState().chatQuery
+                    store.dispatch({type:'ADD_KWARGS',payload:{tag:chatQuery.tag,props:{[chatQuery.propsName]:chatQuery.query}}})
+                    store.dispatch({type:"REMOVE_PROPS_NAME"})
+                }
                 store.dispatch({type:'ADD_CHAT',payload:{
                     user:true,
                     pubDate:new Date(),
-                    body:message||store.getState().chatQuery,
-                    mimeType:'text/plain'
+                    body:message||store.getState().chatQuery.query,
+                    mimeType:'text/plain',
+                    link:0,
+                    getProps:false,
+                    props:"name",
+                    leastPercentage:0.3
                 }})
                 this.chatBody.scroll(0,this.chatBody.scrollHeight)
 
-                const maxPropabilityIntent = _.max(getIntentProbabiliesFromText(store.getState().QA,message||store.getState().chatQuery),(value)=>value.probability)
-                const respond = store.getState().QA.filter((e)=> maxPropabilityIntent.probability>this.clientProbabilityLimit?maxPropabilityIntent.id === e.id:false)
+                var respond;
+
+                if(store.getState().chatQuery.link){
+                     respond = store.getState().QA.filter((e)=>store.getState().chatQuery.link===e.id)
+                    store.dispatch({type:'REMOVE_LINK'})
+                }else{
+                    const maxPropabilityIntent = _.max(getIntentProbabiliesFromText(store.getState().QA,message||store.getState().chatQuery.query),(value)=>value.probability)
+                     respond = store.getState().QA.filter((e)=> maxPropabilityIntent.probability>this.clientProbabilityLimit?maxPropabilityIntent.id === e.id:false)
+                }
                 const respondRandomIndex = _.random(respond.length-1)
                 store.dispatch({type:'ADD_INDICATOR'})
+
+                const body = respond[0]?this.render(respond[respondRandomIndex].answer[_.random(respond[respondRandomIndex].answer.length-1)]):'not getting you qestion please try again...'
+                const mimeType = respond[0]?respond[respondRandomIndex].mimeType:'text/plain'
+                const props = respond[0]?respond[respondRandomIndex].props:''
+                const tag = respond[0]?respond[respondRandomIndex].tag:''
+
+
+                if(respond[0]&&respond[respondRandomIndex].link){
+
+                    store.dispatch({type:'ADD_LINK',payload:respond[respondRandomIndex].link})
+
+
+                }
+
                 setTimeout(() => {
                     store.dispatch({type:'REMOVE_INDICATOR'})
+                    store.dispatch({type:'ADD_PROPS_NAME',payload:{propsName:props,tag}})
                     store.dispatch({type:'ADD_CHAT',payload:{
                         user:false,
                         pubDate:new Date(),
-                        body:respond[0]?respond[respondRandomIndex].answer[_.random(respond[respondRandomIndex].answer.length-1)]:'not getting you qestion please try again...',
-                        mimeType:respond[0]?respond[respondRandomIndex].mimeType:'text/plain'
+                        body,
+                        mimeType
 
                     }})
                     this.chatBody.scroll(0,this.chatBody.scrollHeight)
@@ -127,6 +169,7 @@ class Client {
 
             }
             store.dispatch({type:'CLEAR_QUERY'})
+
             this.chatInput.value=''
         } catch (e) {
             console.error(e)
