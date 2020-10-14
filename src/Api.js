@@ -123,7 +123,6 @@ class Client {
                     body:message||store.getState().chatQuery.query,
                     mimeType:'text/plain',
                     link:0,
-                    getProps:false,
                     props:"name",
                     leastPercentage:0.3
                 }})

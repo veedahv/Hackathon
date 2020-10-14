@@ -9,7 +9,6 @@ const QASchema = ({username,balance})=> [
         answer:['Your are welcome'],
         mimeType:"text/plain",
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
 
@@ -21,7 +20,6 @@ const QASchema = ({username,balance})=> [
         answer:[`Welcome ${username}, How may i be of help?`,'How are you doing?'],
         mimeType:"text/plain",
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
     },
@@ -32,7 +30,6 @@ const QASchema = ({username,balance})=> [
         answer:[new Date().toGMTString()],
         mimeType:"text/plain",
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
     },
@@ -43,7 +40,6 @@ const QASchema = ({username,balance})=> [
         answer:[`Good moring  <% username %>, How may i be of help?`],
         mimeType:"text/plain",
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
     },
@@ -54,7 +50,6 @@ const QASchema = ({username,balance})=> [
         answer:[`you have N${balance} left of your current account balance`,`${username} Your account balance is remaining ${balance}`],
         mimeType:"text/plain",
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
     }
@@ -70,7 +65,6 @@ const initialState = [
         answer:['Your are welcome'],
         mimeType:"text/plain",
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
     },
@@ -81,7 +75,6 @@ const initialState = [
         answer:[new Date().toGMTString()],
         mimeType:"text/plain",
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
     },
@@ -92,7 +85,6 @@ const initialState = [
         answer:['am doing just fine'],
         mimeType:"text/plain",
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
     },
@@ -103,7 +95,6 @@ const initialState = [
         answer:['To purchase airtime follow the following step \n 1) Dail *333# \n 2) then follow the instructions shown on your screen.'],
         mimeType:"text/plain",
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
     },
@@ -114,7 +105,6 @@ const initialState = [
         answer:['Please type in the beneficiary account number and the amount you want to transfer'],
         mimeType:"text/plain",
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
     }
