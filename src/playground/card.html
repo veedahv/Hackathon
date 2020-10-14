@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <title>Document</title>
+    <style>
+        .balance-contain {
+            width: 200px;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="container">
+            <div class="card balance-contain m-2">
+                <div class="card-body">
+                    <div id="balance-card" class="">
+                        <p id="balance-note">Hello name, your account balance is &#8358; 100</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card expense-contain m-2">
+                <div class="card-body">
+                    <div id="expense-card">
+                        <table id="expense-note" class="w-100">
+                            <thead>
+                                <tr>
+                                    <th class="p-2">#</th>
+                                    <th class="p-2">Narration</th>
+                                    <th class="p-2">Debit</th>
+                                    <th class="p-2">Credit</th>
+                                    <th class="p-2">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-2">1</td>
+                                    <td class="p-2">a</td>
+                                    <td class="p-2">b</td>
+                                    <td class="p-2">c</td>
+                                    <td class="p-2">d</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2">2</td>
+                                    <td class="p-2">a</td>
+                                    <td class="p-2">b</td>
+                                    <td class="p-2">c</td>
+                                    <td class="p-2">d</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2">3</td>
+                                    <td class="p-2">a</td>
+                                    <td class="p-2">b</td>
+                                    <td class="p-2">c</td>
+                                    <td class="p-2">d</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
