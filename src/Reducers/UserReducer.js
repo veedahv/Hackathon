@@ -6,7 +6,7 @@ let userSchema = {
 
 function userReducer(state = userSchema, action) {
     switch (action.type) {
-      case 'ADD':
+      case 'UPDATE_USER':
         return {...state,...action.payload}
       case 'CLEAR':
         return {username:'',profilePic:''}

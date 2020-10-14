@@ -1,3 +1,6 @@
+import store from "../Reducers"
+import _ from 'underscore'
+
 
 
 
@@ -6,7 +9,7 @@ class Component{
 
     chatUserBlock(props){
         return `
-        <div class=" user-block col mb-2 col-12 text-right">
+        <div class=" user-block col mb-2 col-12 text-right" >
             <span class="  badge badge-info mb-1 p-2 text-wrap">${props}</span>
           </div>
         `
@@ -15,7 +18,7 @@ class Component{
         return `
         <div class=" bot-block col mb-2 col-12 text-left">
             <div class="avatar rounded-circle" style="background-image: url(/src/assets/images/robot.jpg);background-position: center;background-size: cover;background-repeat: no-repeat;height: 2rem;width: 2rem;"></div>
-            <span class="badge badge-secondary mb-1 p-2 text-left text-wrap">${props}</span>
+            <span class="badge badge-secondary mb-1 p-2 text-left text-wrap" style="background-color:#82c2ff;">${props}</span>
           </div>
         `
     }
@@ -29,6 +32,29 @@ class Component{
           </a>
         `
     }
+    
+
+    updateUsername(){
+        const {
+            oldUsername,
+            newUsername,
+            reUsername
+        } = store.getState().chatQuery.kwargs.update
+        const {username} = store.getState().user
+        if (_.every([oldUsername,newUsername,reUsername,oldUsername===username,newUsername===reUsername])) {
+            
+            store.dispatch({type:"UPDATE_USER",payload:{username:newUsername}})
+            
+            return this.chatBotBlock(`your new username is '${newUsername}'`)
+            
+        } else {
+            return this.chatBotBlock(`the username you entered is !incorrect try again`)
+        }
+        
+
+        
+
+    }
 
 
     showAccountBalance(){
@@ -36,9 +62,9 @@ class Component{
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="card shadow-lg">
             <div class="card-body">
-                <h5 class="text-muted">Total Revenue</h5>
+                <h5 class="text-muted">Your Current Balance is</h5>
                 <div class="metric-value d-inline-block">
-                    <h1 class="mb-1">$12099</h1>
+                    <h1 class="mb-1">N500,000</h1>
                 </div>
                 <div class="metric-label d-inline-block float-right text-success font-weight-bold">
                     <span><i class="fa fa-fw fa-arrow-up"></i></span><span>5.86%</span>

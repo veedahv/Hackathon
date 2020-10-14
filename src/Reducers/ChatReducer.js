@@ -6,7 +6,7 @@ var chatSchema = [
         user:false,
         pubDate:new Date(),
         mimeType:'text/plain',
-        body:`Welcome Anies am Vee and am a bot`,
+        body:`Welcome Anies am 'Fin34' and am a bot`,
         link:0,
         props:"name",
         leastPercentage:0.3
