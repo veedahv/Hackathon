@@ -23,7 +23,7 @@ my_id =get_id()
 try:
     with open(filename,'r') as file:
         data = json.load(file)
-    
+
 except:
     pass
 
@@ -36,7 +36,7 @@ if data == {}:
     intent=[]
 else:
     intent = data['intent']
-    
+
 
 intent_id = my_id
 
@@ -56,6 +56,7 @@ services available:
 10)create
 11)delete
 12)update
+13)greetings
 """
 while True:
 
@@ -64,19 +65,19 @@ while True:
     print("tags can the name of the services,story or topic this intent is for ")
     print(services)
     tag = input("enter tag name with no space or dash\n use camelcase,\n keep blank for  default 'question' tag=>:  ")
-    
+
 
     if not tag:
         tag = 'question'
 
     question = list(map(lambda x:x.strip(),input("enter a question seperate sentences by '|' : ").split('|')))
-    
+
 
     newline()
     answers = list(map(lambda x:x.strip(),input("enter a answers seperate sentences by '|' : ").split('|')))
-    
+
     newline()
-    print("choose one of this enter:\n1) for ==> text/html\n2) for ==> text/plain\n or keep blank for 'text/html':  ")
+    print("choose one of this enter:\n1) for ==> text/html\n2) for ==> text/plain\n or keep blank for 'text/plain':  ")
 
     mimeType = input("enter mimeType for the intent:  ")
     if not mimeType:
@@ -88,10 +89,10 @@ while True:
 
 
     ids = ''.join(previous_id)
-    
+
     print(f"previous ids : \n{ids}")
     link = input(f"enter id to be linked.\nenter 'next' to used next id is '{intent_id+1}' :  ")
-    
+
 
     if not link:
         link=0
@@ -102,10 +103,10 @@ while True:
     newline()
     print("enter props name leave empty od none")
     props = input("enter props for the intent:  ")
-    
+
     newline()
     leastPercentage = input("enter least Percentage for the intent:  ")
-    
+
 
 
     if not leastPercentage:
@@ -114,7 +115,7 @@ while True:
     previous_id = previous_id +['==>'+str(intent_id)+'\n']
     print("previous id",previous_id)
 
-    
+
 
     new_data = {
         "id":intent_id,
@@ -143,4 +144,3 @@ while True:
 
 # with open('text.json','w') as file:
 #     json.dump(test,file)
-    

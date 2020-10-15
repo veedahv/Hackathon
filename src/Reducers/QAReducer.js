@@ -42,17 +42,8 @@ const QASchema = ({username,balance})=> [
         link:0,
         props:"name",
         leastPercentage:0.3
-    },
-    {
-        id:777,
-        tag:'account',
-        questions:['What is my current Account balance','i want to check my account balance','my account balance'],
-        answer:[`you have N${balance} left of your current account balance`,`${username} Your account balance is remaining N${balance}`],
-        mimeType:"text/plain",
-        link:0,
-        props:"name",
-        leastPercentage:0.3
     }
+
 
 
 ]

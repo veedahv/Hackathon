@@ -1,5 +1,6 @@
 import store from "../Reducers"
-import _ from 'underscore'
+import _, { values } from 'underscore'
+import Chart from 'chart.js'
 
 
 
@@ -11,6 +12,18 @@ class Component{
         return `
         <div class=" user-block col mb-2 col-12 text-right" >
             <span class="  badge badge-info mb-1 p-2 text-wrap">${props}</span>
+          </div>
+        `
+    }
+
+
+
+
+    BotContainer(props){
+        return `
+        <div class=" bot-block col mb-2 col-12 text-left">
+            <div class="avatar rounded-circle" style="background-image: url(/src/assets/images/robot.jpg);background-position: center;background-size: cover;background-repeat: no-repeat;height: 2rem;width: 2rem;"></div>
+            ${props}
           </div>
         `
     }
@@ -32,7 +45,7 @@ class Component{
           </a>
         `
     }
-    
+
 
     updateUsername(){
         const {
@@ -40,19 +53,155 @@ class Component{
             newUsername,
             reUsername
         } = store.getState().chatQuery.kwargs.update
+
         const {username} = store.getState().user
         if (_.every([oldUsername,newUsername,reUsername,oldUsername===username,newUsername===reUsername])) {
-            
+
             store.dispatch({type:"UPDATE_USER",payload:{username:newUsername}})
-            
+
             return this.chatBotBlock(`your new username is '${newUsername}'`)
-            
+
         } else {
             return this.chatBotBlock(`the username you entered is !incorrect try again`)
         }
-        
 
-        
+
+
+
+    }
+
+    showBvn(){
+        const {lastAtm4digit} = store.getState().chatQuery.kwargs.question
+        if(_.every([lastAtm4digit,Number(lastAtm4digit)===store.getState().user.atmCard])){
+            return this.chatBotBlock(`your BVN:${store.getState().user.BVN}`)
+
+        }else{
+            return this.chatBotBlock(`The number '${lastAtm4digit}' didnt match with the last digit of your ATM`)
+        }
+    }
+
+    showBankList(){
+        // return this.chatBotBlock(`bank list enter 1`)
+        const result = `
+        tpye the number:
+        <ul class="list-group">
+        <li class="list-group-item">1)FCMB</li>
+        <li class="list-group-item">2)Garanty Trust Bank</li>
+        <li class="list-group-item">3) First Bank</li>
+        <li class="list-group-item">4) Eco Bank</li>
+        <li class="list-group-item">5) Union</li>
+        <li class="list-group-item">6) Diamond</li>
+        </ul>
+        `
+
+        return this.BotContainer(result)
+    }
+
+    paymentCompleted(){
+        return this.chatBotBlock(`pay ment completed`)
+    }
+
+    confirmTransfer(){
+        return this.chatBotBlock(`send 'yes' to confirm and 'no' to cancel`)
+    }
+
+
+    showExpenses(){
+
+        const {balance,expenses} = store.getState().user
+        const sum = _.reduce(expenses.map((value)=>value.amount), function(memo, num){ return memo + num; }, 0);
+
+
+
+        setTimeout(()=>{
+            var data = {
+                datasets: [{
+                    // data: [balance,sum ],
+                    data: [sum,balance ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+
+
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+
+
+                    ],
+                }],
+
+
+                labels: [
+                    'Your Expenses',
+                    'Your Account balance'
+                ]
+            };
+
+
+
+
+            var accountCard = document.querySelectorAll(`.account-chart`)
+            accountCard.forEach((value)=>{
+                var myPieChart = new Chart(value, {
+                    type: 'pie',
+                    data: data
+                    // options: options
+                });
+
+            })
+
+
+        },500)
+
+
+        const rw = expenses.map((value,index)=>(
+            `<tr>
+                <td class="p-1 p-md-2">${value.description}</td>
+                <td class="p-1 p-md-2">${value.amount}</td>
+                <td class="p-1 p-md-2">${new Date(value.date).toDateString()}</td>
+            </tr>`
+        ))
+
+        return  `
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="card shadow-lg w-70">
+                <div class="card-body">
+                    <canvas class="account-chart" width="200" height="200"></canvas>
+                </div>
+
+            </div>
+            <div class="card expense-contain w-100">
+            <div id="expense-card card-body">
+                <table id="expense-note" class="w-100">
+                    <thead>
+                        <tr>
+                            <th class="p-1 p-md-2">Narration</th>
+                            <th class="p-1 p-md-2">Amount(N)</th>
+                            <th class="p-1 p-md-2">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rw}
+                        <tr>
+                            <th class="p-1 p-md-2">Total expenses</th>
+                            <th class="p-1 p-md-2">${sum}</th>
+                            <th class="p-1 p-md-2"></th>
+                        </tr>
+                        <tr>
+                            <th class="p-1 p-md-2">Total Account balance</th>
+                            <th class="p-1 p-md-2">${balance}</th>
+                            <th class="p-1 p-md-2"></th>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        </div>
+        `
 
     }
 

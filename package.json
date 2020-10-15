@@ -37,6 +37,7 @@
         "url": "https://github.com/piecioshka/boilerplate-webpack-babel"
     },
     "dependencies": {
+        "chart.js": "^2.9.3",
         "redux": "^4.0.5",
         "redux-devtools-extension": "^2.13.8",
         "redux-watch": "^1.1.1",
