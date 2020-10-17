@@ -14,7 +14,8 @@ window.addEventListener('DOMContentLoaded',()=>{
 
     const component = new Component()
     const api =new Client(component)
-    store.dispatch({type:'ADD_QA',payload:intent})
+
+    intent?store.dispatch({type:'ADD_QA',payload:intent}):null
     store.dispatch({type:'ADD_QA',payload:QASchema(store.getState().user)})
     store.subscribe(watchChatQuery((newVal, oldVal, objectPath)=>api.getQuestionListSuggestion()))
     store.subscribe(watchChat((newVal, oldVal, objectPath)=>api.UpdateChatContent()))

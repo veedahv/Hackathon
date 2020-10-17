@@ -6,9 +6,8 @@ var chatSchema = [
         user:false,
         pubDate:new Date(),
         mimeType:'text/plain',
-        body:`Welcome Anies am Vee and am a bot`,
+        body:`Welcome Anies am 'Fin34' and am a bot`,
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
     },
@@ -19,7 +18,6 @@ var chatSchema = [
         mimeType:'text/plain',
         body:'What can i help you with?...',
         link:0,
-        getProps:false,
         props:"name",
         leastPercentage:0.3
 
@@ -40,7 +38,6 @@ function chatReducer(state = chatSchema, action) {
             mimeType:'text/html',
             body:'Indicator',
             link:0,
-            getProps:false,
             props:"",
             leastPercentage:0.3
         }]

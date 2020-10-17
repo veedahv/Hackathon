@@ -46,11 +46,21 @@ class Client {
 
 
 
+
+    scrollToButtom(){
+        this.chatBody.scroll(0,this.chatBody.scrollHeight)
+    }
+
+
+
     render(text){
-        const {username,profilePic,balance} = store.getState().user
+        const {username,profilePic,balance,BVN} = store.getState().user
+        const period = new Date().toLocaleString().split(" ").slice(-1)[0]==='PM'?"Afternoon":"Morning"
         return text.replace("<% username %>",username)
         .replace("<% balance %>",balance)
         .replace("<% profilePic %>",profilePic)
+        .replace("<% BVN %>",BVN)
+        .replace("<% period %>",period)
 
     }
 
@@ -107,6 +117,10 @@ class Client {
     }
 
 
+
+
+
+
     addMessageToChatList(message=''){
 
         try {
@@ -123,11 +137,12 @@ class Client {
                     body:message||store.getState().chatQuery.query,
                     mimeType:'text/plain',
                     link:0,
-                    getProps:false,
                     props:"name",
                     leastPercentage:0.3
                 }})
-                this.chatBody.scroll(0,this.chatBody.scrollHeight)
+
+                this.scrollToButtom()
+
 
                 var respond;
 
@@ -140,6 +155,7 @@ class Client {
                 }
                 const respondRandomIndex = _.random(respond.length-1)
                 store.dispatch({type:'ADD_INDICATOR'})
+                this.scrollToButtom()
 
                 const body = respond[0]?this.render(respond[respondRandomIndex].answer[_.random(respond[respondRandomIndex].answer.length-1)]):'not getting you qestion please try again...'
                 const mimeType = respond[0]?respond[respondRandomIndex].mimeType:'text/plain'
@@ -164,7 +180,7 @@ class Client {
                         mimeType
 
                     }})
-                    this.chatBody.scroll(0,this.chatBody.scrollHeight)
+                    this.scrollToButtom()
                 }, _.random(1,3)*1000);
 
             }
